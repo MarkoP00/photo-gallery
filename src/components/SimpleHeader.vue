@@ -2,8 +2,9 @@
   <header ref="headerRef">
     <div class="logo">
       <img
-        src="/images/KazakovLogo-BlackCrop.png"
-        alt="" />
+        src="/images/logo-transparent.png"
+        alt=""
+        @click="() => router.push('/mainPage')" />
     </div>
     <ul class="headerList">
       <li><a href="">Početna</a></li>
@@ -44,9 +45,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { RouterLink, useRouter } from "vue-router";
 
+const router = useRouter();
 const headerRef = ref(null);
 const hamburgerMenuVisible = ref(false);
 
@@ -78,7 +80,9 @@ header.sticky {
 
 header img {
   height: 120px;
-  width: 250px;
+  width: 180px;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .headerList {
@@ -198,15 +202,25 @@ header.sticky .mobileList {
     padding: 10px 10px;
   }
 }
-
 @media (max-width: 426px) {
   header {
     padding: 0 40px 0 0;
   }
   .mobileList {
-    padding: 10px 0;
+    padding: 10px 10px;
   }
-
+  .mobileList ul li {
+    border: 1px solid #fff;
+    padding: 10px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  header.sticky .mobileList ul li {
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
   .mobileList ul li a {
     font-size: 1rem;
   }

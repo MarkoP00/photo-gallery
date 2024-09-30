@@ -1,7 +1,9 @@
 <template>
   <header ref="headerRef">
     <div class="logo">
-      <img src="/images/KazakovLogo-BlackCrop.png" alt="" />
+      <img
+        src="/images/logo-transparent.png"
+        alt="" />
     </div>
     <ul class="headerList">
       <li><a href="">Početna</a></li>
@@ -16,16 +18,17 @@
         <i
           v-if="!hamburgerMenuVisible"
           class="fa-solid fa-bars"
-          @click="toggleHamburger"
-        ></i>
-        <i v-else class="fa-solid fa-xmark" @click="toggleHamburger"></i>
+          @click="toggleHamburger"></i>
+        <i
+          v-else
+          class="fa-solid fa-xmark"
+          @click="toggleHamburger"></i>
       </div>
       <Transition name="fade">
         <div
           class="mobileList"
           v-if="hamburgerMenuVisible"
-          :class="{ menuVisible: hamburgerMenuVisible }"
-        >
+          :class="{ menuVisible: hamburgerMenuVisible }">
           <ul>
             <li><a href="">Početna</a></li>
             <li><a href="">O nama</a></li>
@@ -39,7 +42,9 @@
     </div>
   </header>
   <div class="banner">
-    <img src="/images/bg-image.jpg" alt="image not found" />
+    <img
+      src="/images/bg-image.jpg"
+      alt="image not found" />
     <div class="banner-text">
       <h1>Vaše uspomene</h1>
       <h2>naša umetnost</h2>
@@ -104,7 +109,9 @@ header.sticky {
 
 header img {
   height: 120px;
-  width: 250px;
+  width: 180px;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .headerList {
@@ -276,9 +283,22 @@ header.sticky .mobileList {
     padding: 0 40px 0 0;
   }
   .mobileList {
-    padding: 10px 0;
+    padding: 10px 10px;
   }
-
+  .mobileList ul li {
+    border: 1px solid #fff;
+    padding: 10px;
+    background-color: rgb(22, 147, 230, 0.4);
+    border-radius: 10px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  header.sticky .mobileList ul li {
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
   .mobileList ul li a {
     font-size: 1rem;
   }
