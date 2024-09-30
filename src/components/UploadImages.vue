@@ -1,5 +1,6 @@
 <template>
   <AnimatedBackground></AnimatedBackground>
+  <SimpleHeader></SimpleHeader>
   <section class="upload-container">
     <Transition name="fade">
       <GlobalPopup
@@ -7,8 +8,7 @@
         @close="closePopup"
         :singleButton="true"
         :title="popupTitle"
-        :message="popupMessage"
-      ></GlobalPopup>
+        :message="popupMessage"></GlobalPopup>
     </Transition>
 
     <main class="upload-main">
@@ -24,8 +24,7 @@
             id="title"
             placeholder="Unesite naslov"
             class="input-field"
-            autocomplete="off"
-          />
+            autocomplete="off" />
         </div>
         <div class="form-group">
           <label for="desc">Opis slike</label>
@@ -35,8 +34,7 @@
             id="desc"
             placeholder="Unesite opis"
             class="input-field"
-            autocomplete="off"
-          />
+            autocomplete="off" />
         </div>
         <div class="form-group">
           <label for="family">Kategorija slike</label>
@@ -46,15 +44,16 @@
             id="category"
             placeholder="Unesite kategoriju"
             class="input-field"
-            autocomplete="off"
-          />
+            autocomplete="off" />
         </div>
         <div class="upload-button-container">
           <p class="attention">
             Naslov, opis i slika će se automatski poslati na server čim
             odaberete sliku.
           </p>
-          <button @click="openUploadWidget" class="upload-button">
+          <button
+            @click="openUploadWidget"
+            class="upload-button">
             Odaberi sliku
           </button>
         </div>
@@ -64,9 +63,29 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import GlobalPopup from "../global/GlobalPopup.vue";
 import AnimatedBackground from "./AnimatedBackground.vue";
+import SimpleHeader from "./SimpleHeader.vue";
+const router = useRouter();
+
+function checkUserToken() {
+  const idToken = localStorage.getItem("idToken");
+  const expirationTime = localStorage.getItem("expirationTime");
+  console.log(expirationTime);
+
+  if (!idToken || !expirationTime) {
+    return router.push("/signup");
+  } else if (idToken && expirationTime) {
+    const currentTime = Date.now();
+    console.log(currentTime, " curr");
+
+    if (currentTime >= expirationTime) {
+      return router.push("/signup");
+    }
+  }
+}
 
 function getCurrentDate() {
   const now = new Date();
@@ -88,6 +107,7 @@ const imageValues = ref({
   description: "",
   category: "",
 });
+
 const widget = window.cloudinary.createUploadWidget(
   {
     cloud_name: "djre34b8c",
@@ -128,6 +148,10 @@ const widget = window.cloudinary.createUploadWidget(
 function openUploadWidget() {
   widget.open();
 }
+
+onMounted(() => {
+  checkUserToken();
+});
 </script>
 
 <style scoped>
@@ -207,7 +231,7 @@ label {
 }
 
 .upload-button {
-  background-color: #007bff;
+  background-color: #573b8a;
   color: white;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -218,7 +242,7 @@ label {
 }
 
 .upload-button:hover {
-  background-color: #0056b3;
+  background-color: #6b44d8;
 }
 
 @media (max-width: 376px) {

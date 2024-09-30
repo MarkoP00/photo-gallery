@@ -4,8 +4,7 @@
     :images="sortArray"
     @imageLink="colletImageID"
     @sortBy="sortByFamily"
-    @onReset="resetFilter"
-  ></PhotoGallery>
+    @onReset="resetFilter"></PhotoGallery>
   <AnimatedBackground></AnimatedBackground>
 
   <Transition name="fade">
@@ -13,8 +12,7 @@
       v-if="selectedImageURL"
       :selectedImageURL="selectedImageURL"
       :images="sortArray"
-      :onClose="closeImage"
-    ></SingleImage>
+      :onClose="closeImage"></SingleImage>
   </Transition>
 </template>
 

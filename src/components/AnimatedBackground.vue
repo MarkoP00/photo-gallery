@@ -23,7 +23,7 @@
   background-color: #18191f;
   box-shadow: 0 0 50px #0072ff, 0 0 100px #0072ff, 0 0 150px #0072ff,
     0 0 200px #0072ff;
-  animation: animate 8s linear infinite;
+  animation: animate 6s linear infinite;
 }
 
 .wrapper span:nth-child(1) {

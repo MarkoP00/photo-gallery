@@ -8,20 +8,28 @@
         :id="clickedImageId"
         :singleButton="messageDeleted"
         @confirm="deleteImage"
-        @close="closePopup"
-      ></GlobalPopup>
+        @close="closePopup"></GlobalPopup>
     </Transition>
 
     <main>
-      <ButtonSlider :sortBy="sortImages" :onReset="resetFilter"></ButtonSlider>
+      <ButtonSlider
+        :sortBy="sortImages"
+        :onReset="resetFilter"></ButtonSlider>
       <div class="container">
         <p v-if="props.images.length === 0">
           Nažalost, došlo je do problema. Molim vas pokušajte ponovo
         </p>
         <GlobalSpinner v-if="images.length === 0"></GlobalSpinner>
-        <div class="box" v-for="image in images" :key="image.id">
-          <img :src="image.imageURL" :alt="'Slika:' + image.title" />
-          <div class="imageDetails" @click="handleSingleImage(image.imageURL)">
+        <div
+          class="box"
+          v-for="image in images"
+          :key="image.id">
+          <img
+            :src="image.imageURL"
+            :alt="'Slika:' + image.title" />
+          <div
+            class="imageDetails"
+            @click="handleSingleImage(image.imageURL)">
             <div>
               <h3>{{ image.title }}</h3>
             </div>
@@ -29,8 +37,12 @@
               <p>{{ image.description }}</p>
             </div>
           </div>
-          <div class="deleteButton">
-            <i class="fa-solid fa-trash-can" @click="showPopup(image.id)"></i>
+          <div
+            v-if="adminLogged"
+            class="deleteButton">
+            <i
+              class="fa-solid fa-trash-can"
+              @click="showPopup(image.id)"></i>
           </div>
         </div>
       </div>
@@ -42,11 +54,12 @@
 import GlobalPopup from "../global/GlobalPopup.vue";
 import ButtonSlider from "./ButtonSlider.vue";
 import GlobalSpinner from "../global/GlobalSpinner.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const popupTitle = ref("");
 const popupMessage = ref("");
 const messageDeleted = ref(false);
+const adminLogged = ref(null);
 
 const clickedImageId = ref("");
 
@@ -58,6 +71,24 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["imageLink", "sortBy", "onReset"]);
+
+function checkAdminStatus() {
+  const idToken = localStorage.getItem("idToken");
+  const expirationTime = localStorage.getItem("expirationTime");
+  console.log(expirationTime);
+
+  if (!idToken || !expirationTime) {
+    return (adminLogged.value = false);
+  } else if (idToken && expirationTime) {
+    const currentTime = Date.now();
+    console.log(currentTime, "curr");
+    if (currentTime >= expirationTime) {
+      return (adminLogged.value = false);
+    } else {
+      return (adminLogged.value = true);
+    }
+  }
+}
 
 function sortImages(family) {
   return emit("sortBy", family);
@@ -107,6 +138,9 @@ async function deleteImage() {
     messageDeleted.value = true;
   }
 }
+onMounted(() => {
+  checkAdminStatus();
+});
 </script>
 
 <style scoped>
