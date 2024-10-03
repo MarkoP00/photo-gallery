@@ -109,7 +109,7 @@ header.sticky {
 
 header img {
   height: 120px;
-  width: 180px;
+  width: 150px;
   margin: 5px;
   cursor: pointer;
 }
@@ -301,6 +301,10 @@ header.sticky .mobileList {
   }
   .mobileList ul li a {
     font-size: 1rem;
+  }
+  header img {
+    height: 100px;
+    width: 120px;
   }
 }
 

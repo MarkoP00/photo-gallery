@@ -75,13 +75,12 @@ const emit = defineEmits(["imageLink", "sortBy", "onReset"]);
 function checkAdminStatus() {
   const idToken = localStorage.getItem("idToken");
   const expirationTime = localStorage.getItem("expirationTime");
-  console.log(expirationTime);
 
   if (!idToken || !expirationTime) {
     return (adminLogged.value = false);
   } else if (idToken && expirationTime) {
     const currentTime = Date.now();
-    console.log(currentTime, "curr");
+
     if (currentTime >= expirationTime) {
       return (adminLogged.value = false);
     } else {
