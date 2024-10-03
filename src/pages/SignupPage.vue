@@ -67,7 +67,7 @@
           <p>
             Ako se suočavaš s problemima prilikom prijavljivanja, slobodno
             kontaktiraj naš tim na
-            <a href="mailto:ffice@apiforge.net">apiforge123@gmail.com</a>
+            <a href="mailto:office@apiforge.net">office@apiforge.net</a>
           </p>
           <p>
             Molimo te da ne pokušavaš prijavu na nalog bez ovlašćenja. Hvala ti
